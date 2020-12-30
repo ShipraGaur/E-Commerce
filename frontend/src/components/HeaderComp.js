@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Nav, Component, Container } from 'react-bootstrap'
+import { Navbar, Nav, Container } from 'react-bootstrap'
 
 const HeaderComp = () => {
     return (
