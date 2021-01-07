@@ -6,12 +6,11 @@ import axios from 'axios'
 
  
 const ProductScreen = ({ match }) => {
-    // const product = products.find( p => p._id === match.params.id )
     const [product,setProduct] = useState({})
 
     useEffect( () => {
     const fetchProduct = async () => {
-        const res = await axios.get(`/product/${match.params.id}`)
+        const res = await axios.get(`/api/product/${match.params.id}`)
         setProduct(res.data)
     }
     fetchProduct()
