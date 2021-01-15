@@ -1,14 +1,15 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter , Route } from 'react-router-dom'
-import HeaderComp from './components/HeaderComp';
-import FooterComp from './components/FooterComp';
-import HomeScreen from './screens/HomeScreen';
-import ProductScreen from './screens/ProductScreen';
-import CartScreen from './screens/CartScreen';
-import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import ProfileScreen from './screens/ProfileScreen';
+import HeaderComp from './components/HeaderComp'
+import FooterComp from './components/FooterComp'
+import HomeScreen from './screens/HomeScreen'
+import ProductScreen from './screens/ProductScreen'
+import CartScreen from './screens/CartScreen'
+import LoginScreen from './screens/LoginScreen'
+import RegisterScreen from './screens/RegisterScreen'
+import ProfileScreen from './screens/ProfileScreen'
+import ShippingScreen from './screens/ShippingScreen'
 
 const App= () => {
   return (
@@ -23,6 +24,7 @@ const App= () => {
             <Route path='/login' component={LoginScreen} />
             <Route path='/register' component={RegisterScreen} />
             <Route path='/profile' component={ProfileScreen} />
+            <Route path='/shipping' component={ShippingScreen} />
           </Container>
       </main> 
       <FooterComp/>  
