@@ -1,4 +1,4 @@
-import * as ActionTypes from '../ActionTypes'
+import * as ActionTypes from '../ActionTypes/productConstants'
 import axios from 'axios'
 
 export const listProducts = () => async(dispatch) => {

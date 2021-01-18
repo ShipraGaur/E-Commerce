@@ -7,9 +7,9 @@ import MessageComp from '../components/MessageComp'
 import{ getOrderDetails, payOrder } from '../redux/actions/orderActions'
 import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
-import { ORDER_PAY_RESET } from '../redux/ActionTypes'
+import { ORDER_PAY_RESET } from '../redux/ActionTypes/orderConstants'
 
-const OrderScreen = ({ match }) => {
+const OrderScreen = ({ match, history }) => {
     const orderId = match.params.id
     const dispatch = useDispatch()
 
@@ -22,6 +22,9 @@ const OrderScreen = ({ match }) => {
     const orderPay = useSelector((state) => state.orderPay)
     const { loading:loadingPay, success:successPay } = orderPay
 
+    const userLogin = useSelector((state) => state.userLogin)
+    const { userInfo } = userLogin
+
     if(!loading){
         const addDecimals = (num) => {
             return (Math.round(num * 100) / 100).toFixed(2)
@@ -31,8 +34,13 @@ const OrderScreen = ({ match }) => {
         order.taxPrice = addDecimals(Number(order.taxPrice))
         order.totalPrice = addDecimals(Number(order.totalPrice))
     }
+
   
     useEffect(() => {
+        if (!userInfo) {
+          history.push('/login')
+        }
+
         const addPayPalScript = async() => {
             const { data: clientId } = await axios.get('/api/config/paypal')
             const script = document.createElement('script')
@@ -45,7 +53,7 @@ const OrderScreen = ({ match }) => {
             document.body.appendChild(script)
         }
 
-        if(!order || successPay){
+        if(!order || successPay || order._id !== orderId){
           dispatch({ type: ORDER_PAY_RESET })
           dispatch(getOrderDetails(orderId))
         }  
@@ -57,7 +65,7 @@ const OrderScreen = ({ match }) => {
           }
         }
 
-    }, [dispatch, orderId, successPay, order])   
+    }, [dispatch, orderId, successPay, order, history, userInfo])   
 
     const successPaymentHandler = (paymentResult) => {
       console.log(paymentResult)

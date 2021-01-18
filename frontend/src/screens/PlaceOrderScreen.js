@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import CheckoutStepsComp from '../components/CheckoutStepsComp'
 import MessageComp from '../components/MessageComp'
-import{ createOrder } from '../redux/actions/orderActions'
+import { createOrder } from '../redux/actions/orderActions'
+import { USER_DETAILS_RESET } from '../redux/ActionTypes/userConstants'
+import { ORDER_CREATE_RESET } from '../redux/ActionTypes/orderConstants'
 
 const PlaceOrderScreen = ({ history }) => {
     const dispatch = useDispatch()
@@ -37,6 +39,8 @@ const PlaceOrderScreen = ({ history }) => {
     useEffect(() => {
       if (success) {
         history.push(`/order/${order._id}`)
+        dispatch({ type: USER_DETAILS_RESET })
+        dispatch({ type: ORDER_CREATE_RESET })
       }
       // eslint-disable-next-line
     }, [history, success])
@@ -49,7 +53,7 @@ const PlaceOrderScreen = ({ history }) => {
           paymentMethod: cart.paymentMethod,
           itemsPrice: cart.itemsPrice,
           shippingPrice: cart.shippingPrice,
-          taxPrice: cart.taxPrice,
+          taxPrice: cart.taxPrice, 
           totalPrice: cart.totalPrice,
         })
       )

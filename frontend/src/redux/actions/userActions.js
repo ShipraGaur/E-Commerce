@@ -1,5 +1,6 @@
-import * as ActionTypes from '../ActionTypes'
+import * as ActionTypes from '../ActionTypes/userConstants'
 import axios from 'axios'
+import { LIST_MY_ORDER_RESET } from '../ActionTypes/orderConstants'
 
 export const login = (email, password) => async(dispatch) => {
     try { 
@@ -32,9 +33,13 @@ export const login = (email, password) => async(dispatch) => {
 
 export const logout = () => (dispatch) => {
     localStorage.removeItem('userInfo')
+    localStorage.removeItem('cartItems')
+    localStorage.removeItem('shippingAddress')
+    localStorage.removeItem('paymentMethod')
     dispatch({ type: ActionTypes.USER_LOGOUT })
     dispatch({ type: ActionTypes.USER_DETAILS_RESET })
-    dispatch({ type: ActionTypes.LIST_MY_ORDER_RESET })
+    dispatch({ type: LIST_MY_ORDER_RESET })
+    document.location.href = '/login'
 }
 
 export const register = (name, email, password) => async(dispatch) => {
@@ -92,11 +97,15 @@ export const getUserDetails = (id) => async(dispatch, getState) => {
         })
     } 
     catch (error) {
+        const message = error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout())
+        }
         dispatch({ 
             type: ActionTypes.USER_DETAILS_FAIL,
-            payload: error.response && error.response.data.message 
-                        ? error.response.data.message 
-                        : error.message
+            payload: message
         }) 
     }
 }
@@ -130,12 +139,12 @@ export const updateUserProfile = (user) => async(dispatch, getState) => {
         const message = error.response && error.response.data.message
                         ? error.response.data.message
                         : error.message
-            if (message === 'Not authorized, token failed') {
-                dispatch(logout())
-            }
-            dispatch({
-                type: ActionTypes.USER_UPDATE_PROFILE_FAIL,
-                payload: message,
-            })
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout())
+        }
+        dispatch({
+            type: ActionTypes.USER_UPDATE_PROFILE_FAIL,
+            payload: message,
+        })
     }
 }

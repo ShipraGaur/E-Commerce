@@ -1,5 +1,7 @@
-import * as ActionTypes from '../ActionTypes'
+import * as ActionTypes from '../ActionTypes/orderConstants'
 import axios from 'axios'
+import { logout } from './userActions'
+import { CART_RESET } from '../ActionTypes/cartConstants'
 
 export const createOrder = (order) => async(dispatch, getState) => {
     try { 
@@ -19,16 +21,23 @@ export const createOrder = (order) => async(dispatch, getState) => {
         dispatch({ 
             type: ActionTypes.ORDER_CREATE_SUCCESS,
             payload: data
+        })
+        dispatch({
+            type: CART_RESET,
+            payload: data
         })        
     } 
     catch (error) {
         const message = error.response && error.response.data.message
                         ? error.response.data.message
                         : error.message
-            dispatch({
-                type: ActionTypes.ORDER_CREATE_FAIL,
-                payload: message,
-            })
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout())
+        }
+        dispatch({
+            type: ActionTypes.ORDER_CREATE_FAIL,
+            payload: message,
+        })
     }
 }
 
@@ -56,10 +65,13 @@ export const getOrderDetails = (id) => async(dispatch, getState) => {
         const message = error.response && error.response.data.message
                         ? error.response.data.message
                         : error.message
-            dispatch({
-                type: ActionTypes.ORDER_DETAILS_FAIL,
-                payload: message,
-            })
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout())
+        }
+        dispatch({
+            type: ActionTypes.ORDER_DETAILS_FAIL,
+            payload: message,
+        })
     }
 }
 
@@ -79,7 +91,7 @@ export const payOrder = (orderId, paymentResult) => async(dispatch, getState) =>
         const {data} = await axios.put(`/api/orders/${orderId}/pay`, paymentResult, config)
 
         dispatch({ 
-            type: ActionTypes.ORDER_DETAILS_SUCCESS,
+            type: ActionTypes.ORDER_PAY_SUCCESS,
             payload: data
         })         
     } 
@@ -87,10 +99,13 @@ export const payOrder = (orderId, paymentResult) => async(dispatch, getState) =>
         const message = error.response && error.response.data.message
                         ? error.response.data.message
                         : error.message
-            dispatch({
-                type: ActionTypes.ORDER_PAY_FAIL,
-                payload: message,
-            })
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout())
+        }
+        dispatch({
+            type: ActionTypes.ORDER_PAY_FAIL,
+            payload: message,
+        })
     }
 }
 
@@ -117,9 +132,12 @@ export const listMyOrders = () => async(dispatch, getState) => {
         const message = error.response && error.response.data.message
                         ? error.response.data.message
                         : error.message
-            dispatch({
-                type: ActionTypes.LIST_MY_ORDER_FAIL,
-                payload: message,
-            })
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout())
+        }
+        dispatch({
+            type: ActionTypes.LIST_MY_ORDER_FAIL,
+            payload: message,
+        })
     }
 }

@@ -1,4 +1,4 @@
-import * as ActionTypes from '../ActionTypes'
+import * as ActionTypes from '../ActionTypes/orderConstants'
 
 export const orderCreateReducer = (state = {}, action) => {
     switch(action.type){
@@ -8,9 +8,10 @@ export const orderCreateReducer = (state = {}, action) => {
             return { loading: false, success: true, order: action.payload }
         case ActionTypes.ORDER_CREATE_FAIL:
             return { loading:false, error: action.payload}
+        case ActionTypes.ORDER_CREATE_RESET:
+                return {}
         default:
             return state
-
     }
 }
 

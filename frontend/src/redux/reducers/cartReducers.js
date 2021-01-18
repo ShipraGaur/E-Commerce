@@ -1,4 +1,4 @@
-import * as ActionTypes from '../ActionTypes'
+import * as ActionTypes from '../ActionTypes/cartConstants'
 
 export const cartReducer = (state = { cartItems: [] , shippingAddress: {} }, action) => {
     switch(action.type){
@@ -34,6 +34,8 @@ export const cartReducer = (state = { cartItems: [] , shippingAddress: {} }, act
                 ...state,
                 paymentMethod: action.payload
             }
+        case ActionTypes.CART_RESET:
+            return { ...state, cartItems: [] }
         default:
             return state
     }
