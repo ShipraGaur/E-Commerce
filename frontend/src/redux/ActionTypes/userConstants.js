@@ -21,10 +21,18 @@ export const USER_UPDATE_PROFILE_SUCCESS = 'USER_UPDATE_PROFILE_SUCCESS';
 export const USER_UPDATE_PROFILE_FAIL = 'USER_UPDATE_PROFILE_FAIL';
 export const USER_UPDATE_PROFILE_RESET = 'USER_UPDATE_PROFILE_RESET';
 
-//fetch all user constants
+// admin side constants
+// fetch all user constants
 export const USER_LIST_REQUEST = 'USER_LIST_REQUEST';
 export const USER_LIST_SUCCESS = 'USER_LIST_SUCCESS';
 export const USER_LIST_FAIL = 'USER_LIST_FAIL';
+
+// delete a user constant
+export const USER_DELETE_REQUEST = 'USER_DELETE_REQUEST';
+export const USER_DELETE_SUCCESS = 'USER_DELETE_SUCCESS';
+export const USER_DELETE_FAIL = 'USER_DELETE_FAIL';
+
+
 
 
 
