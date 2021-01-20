@@ -4,7 +4,8 @@ import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import MessageComp from '../components/MessageComp'
 import LoaderComp from '../components/LoaderComp'
-import { listProducts, deleteProducts } from '../redux/actions/productActions'
+import { listProducts, deleteProducts, createProduct } from '../redux/actions/productActions'
+import { PRODUCT_CREATE_RESET } from '../redux/ActionTypes/productConstants'
 
 const ProductListScreen = ({ history, match }) => {
     const dispatch = useDispatch()
@@ -14,19 +15,34 @@ const ProductListScreen = ({ history, match }) => {
   
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
-  
+   
     const productDelete = useSelector((state) => state.productDelete)
     const { loading: loadingDelete,
             error: errorDelete,
-            success: successDelete } = productDelete
-  
+            success: successDelete 
+    } = productDelete
+
+    const productCreate = useSelector((state) => state.productCreate)
+    const {
+        loading: loadingCreate,
+        error: errorCreate,
+        success: successCreate,
+        product: createdProduct
+    } = productCreate
+
     useEffect(() => {
-      if (userInfo && userInfo.isAdmin) {
-        dispatch(listProducts())
-      } else {
-        history.push('/login')
-      }
-    }, [dispatch, history, userInfo, successDelete])
+        dispatch({ type: PRODUCT_CREATE_RESET })
+
+        if (!userInfo || !userInfo.isAdmin) {
+            history.push('/login')
+        }
+    
+        if (successCreate) {
+            history.push(`/admin/product/${createdProduct._id}/edit`)
+        } else {
+            dispatch(listProducts())
+        }
+    }, [dispatch, history, userInfo, successDelete, successCreate, createdProduct])
   
     const deleteHandler = (id) => {
       if (window.confirm('Are you sure')) {
@@ -35,7 +51,7 @@ const ProductListScreen = ({ history, match }) => {
     }
 
     const createProductHandler = () => {
-        console.log('created')
+        dispatch(createProduct())
     }
     
     return (
@@ -52,8 +68,8 @@ const ProductListScreen = ({ history, match }) => {
             </Row>
             {loadingDelete && <LoaderComp />}
             {errorDelete && <MessageComp variant='danger'>{errorDelete}</MessageComp>}
-            {/* {loadingCreate && <LoaderComp />}
-            {errorCreate && <MessageComp variant='danger'>{errorCreate}</MessageComp>} */}
+            {loadingCreate && <LoaderComp />}
+            {errorCreate && <MessageComp variant='danger'>{errorCreate}</MessageComp>}
             {loading ? (
                 <LoaderComp />
             ) : error ? (
