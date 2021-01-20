@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import LoaderComp from '../components/LoaderComp'
 import MessageComp from '../components/MessageComp'
-import{ getOrderDetails, payOrder } from '../redux/actions/orderActions'
+import{ getOrderDetails, payOrder, deliverOrder } from '../redux/actions/orderActions'
 import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
-import { ORDER_PAY_RESET } from '../redux/ActionTypes/orderConstants'
+import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../redux/ActionTypes/orderConstants'
 
 const OrderScreen = ({ match, history }) => {
     const orderId = match.params.id
@@ -24,6 +24,9 @@ const OrderScreen = ({ match, history }) => {
 
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
+
+    const orderDeliver = useSelector((state) => state.orderDeliver)
+    const { loading:loadingDeliver, success:successDeliver } = orderDeliver
 
     if(!loading){
         const addDecimals = (num) => {
@@ -53,8 +56,9 @@ const OrderScreen = ({ match, history }) => {
             document.body.appendChild(script)
         }
 
-        if(!order || successPay || order._id !== orderId){
+        if(!order || successPay || order._id !== orderId || successDeliver){
           dispatch({ type: ORDER_PAY_RESET })
+          dispatch({ type: ORDER_DELIVER_RESET})
           dispatch(getOrderDetails(orderId))
         }  
         else if (!order.isPaid) {
@@ -65,11 +69,14 @@ const OrderScreen = ({ match, history }) => {
           }
         }
 
-    }, [dispatch, orderId, successPay, order, history, userInfo])   
+    }, [dispatch, orderId, successPay, order, history, userInfo, successDeliver])   
 
     const successPaymentHandler = (paymentResult) => {
-      console.log(paymentResult)
       dispatch(payOrder(orderId, paymentResult))
+    }
+
+    const deliverHandler = () => {
+      dispatch(deliverOrder(order))
     }
 
     return loading ? (
@@ -182,7 +189,7 @@ const OrderScreen = ({ match, history }) => {
                       <Col>${order.totalPrice}</Col>
                     </Row>
                   </ListGroup.Item>
-                  {!order.isPaid && (
+                  {!order.isPaid && !userInfo.isAdmin && (
                     <ListGroup.Item>
                       {loadingPay && <LoaderComp />}
                       {!sdkReady ? (
@@ -195,7 +202,7 @@ const OrderScreen = ({ match, history }) => {
                       )}
                     </ListGroup.Item>
                   )}
-                  {/* {loadingDeliver && <LoaderComp />}
+                  {loadingDeliver && <LoaderComp />}
                   {userInfo &&
                     userInfo.isAdmin &&
                     order.isPaid &&
@@ -209,7 +216,7 @@ const OrderScreen = ({ match, history }) => {
                           Mark As Delivered
                         </Button>
                       </ListGroup.Item>
-                    )} */}
+                    )}
                 </ListGroup>
               </Card>
             </Col>

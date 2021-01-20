@@ -9,7 +9,7 @@ export const ORDER_DETAILS_REQUEST = 'ORDER_DETAILS_REQUEST';
 export const ORDER_DETAILS_SUCCESS = 'ORDER_DETAILS_SUCCESS';
 export const ORDER_DETAILS_FAIL = 'ORDER_DETAILS_FAIL';
 
-// order payment constants
+// update order to paid constants
 export const ORDER_PAY_REQUEST = 'ORDER_PAY_REQUEST';
 export const ORDER_PAY_SUCCESS = 'ORDER_PAY_SUCCESS';
 export const ORDER_PAY_FAIL = 'ORDER_PAY_FAIL';
@@ -25,3 +25,9 @@ export const LIST_MY_ORDER_RESET = 'LIST_MY_ORDER_RESET';
 export const LIST_ORDERS_REQUEST = 'LIST_ORDERS_REQUEST';
 export const LIST_ORDERS_SUCCESS = 'LIST_ORDERS_SUCCESS';
 export const LIST_ORDERS_FAIL = 'LIST_ORDERS_FAIL';
+
+// update order to deliver constants
+export const ORDER_DELIVER_REQUEST = 'ORDER_DELIVER_REQUEST';
+export const ORDER_DELIVER_SUCCESS = 'ORDER_DELIVER_SUCCESS';
+export const ORDER_DELIVER_FAIL = 'ORDER_DELIVER_FAIL';
+export const ORDER_DELIVER_RESET = 'ORDER_DELIVER_RESET'
