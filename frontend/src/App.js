@@ -26,6 +26,7 @@ const App= () => {
       <main className="py-3">
           <Container>
             <Route exact path='/' component={HomeScreen} />
+            <Route exact path='/search/:keyword' component={HomeScreen} />
             <Route path='/product/:id' component={ProductScreen} />
             {/* id is optional in the route below  so put a ?*/}
             <Route path='/cart/:id?' component={CartScreen} />  
