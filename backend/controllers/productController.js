@@ -7,12 +7,12 @@ import Product from '../models/productModel.js '
 export const getProducts = asyncHandler(async (req,res) => {
     const keyword = req.query.keyword ? {
         name: {
-            $regex: req.query.keyword, // regular expression
+            $regex: req.query.keyword, //regular expression
             $options: 'i' // not case sensitive
         }
     } : {}
 
-    const products = await Product.find({ ...keyword })
+    const products = await Product.find({...keyword})
     res.json(products)
 })
 
@@ -123,4 +123,12 @@ export const createProductReview = asyncHandler(async (req,res) => {
         res.status(404)
         throw new Error('Product not found')
     }
+}) 
+
+// @desc   Get top rated Products
+// @route  GET/api/products/top
+// @access Public
+export const getTopProducts = asyncHandler(async (req,res) => {
+    const products = await Product.find({}).sort({ rating: -1}).limit(3)
+    res.json(products)
 }) 

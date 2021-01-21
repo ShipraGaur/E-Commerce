@@ -5,6 +5,7 @@ import ProductComp from '../components/ProductComp'
 import MessageComp from '../components/MessageComp'
 import LoaderComp from '../components/LoaderComp'
 import { listProducts } from '../redux/actions/productActions'
+import ProductCarouselComp from '../components/ProductCarouselComp'
 
 
 const HomeScreen = ({ match }) => {
@@ -21,6 +22,7 @@ const HomeScreen = ({ match }) => {
 
     return (
         <React.Fragment>
+            {!keyword && <ProductCarouselComp />}
             <h1>Latest Products </h1>
             { loading ? (
                 <LoaderComp />
