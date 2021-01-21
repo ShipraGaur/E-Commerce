@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import MessageComp from '../components/MessageComp'
 import LoaderComp from '../components/LoaderComp'
 import FormContainerComp from '../components/FormContainerComp'
+import MetaComp from '../components/MetaComp'
 import { listProductDetails, updateProduct } from '../redux/actions/productActions'
 import { PRODUCT_UPDATE_RESET } from '../redux/ActionTypes/productConstants'
 
@@ -68,6 +69,7 @@ const ProductEditScreen = ({ match, history }) => {
 
   return (
     <>
+      <MetaComp title='Edit Product' />
       <Link to='/admin/productlist' className='btn btn-light my-3'>
         Go Back
       </Link>

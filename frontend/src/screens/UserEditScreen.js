@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainerComp from '../components/FormContainerComp'
+import MetaComp from '../components/MetaComp'
 import { getUserDetails, updateUser } from '../redux/actions/userActions'
 import { USER_UPDATE_RESET } from '../redux/ActionTypes/userConstants'
 import LoaderComp from '../components/LoaderComp'
@@ -49,6 +50,7 @@ const UserEditScreen = ({ match, history }) => {
 
   return (
     <>
+    <MetaComp title='Edit User' />
       <Link to='/admin/userlist' className='btn btn-light my-3'>
         Go Back
       </Link>

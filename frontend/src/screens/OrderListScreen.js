@@ -4,6 +4,7 @@ import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import MessageComp from '../components/MessageComp'
 import LoaderComp from '../components/LoaderComp'
+import MetaComp from '../components/MetaComp'
 import { listOrders } from '../redux/actions/orderActions'
 
 const OrderListScreen = ({ history }) => {
@@ -32,6 +33,8 @@ const OrderListScreen = ({ history }) => {
         ) : error ? (
             <MessageComp variant='danger'>{error}</MessageComp>
         ) : (
+            <>
+            <MetaComp title='Orders' />
             <Table striped bordered hover responsive className='table-sm'>
             <thead>
                 <tr>
@@ -76,6 +79,7 @@ const OrderListScreen = ({ history }) => {
                 ))}
             </tbody>
             </Table>
+            </>
         )}
       </>
     )

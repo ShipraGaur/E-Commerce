@@ -5,6 +5,7 @@ import { Row, Col, Form, Button } from 'react-bootstrap'
 import MessageComp from '../components/MessageComp'
 import LoaderComp from '../components/LoaderComp'
 import FormContainerComp from '../components/FormContainerComp'
+import MetaComp from '../components/MetaComp'
 import { login } from '../redux/actions/userActions'
 
 const LoginScreen = ({ location, history}) => {
@@ -30,6 +31,8 @@ const LoginScreen = ({ location, history}) => {
     }
 
     return (
+        <>
+        <MetaComp title='Login' />
         <FormContainerComp>
             <h1>Sign In</h1>
             {error && <MessageComp variant='danger'>{error}</MessageComp>}
@@ -69,6 +72,7 @@ const LoginScreen = ({ location, history}) => {
                     </Col>
                 </Row>
         </FormContainerComp>
+        </>
     )
 }
 

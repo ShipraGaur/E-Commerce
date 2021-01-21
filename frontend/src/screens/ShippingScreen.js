@@ -3,6 +3,7 @@ import { useDispatch, useSelector} from 'react-redux'
 import { Form, Button } from 'react-bootstrap'
 import FormContainerComp from '../components/FormContainerComp'
 import CheckoutStepsComp from '../components/CheckoutStepsComp'
+import MetaComp from '../components/MetaComp'
 import { saveShippingAddress } from '../redux/actions/cartActions'
 
 const ShippingScreen = ({ history }) => {
@@ -23,6 +24,8 @@ const ShippingScreen = ({ history }) => {
     }
 
     return (
+        <>
+        <MetaComp title='Checkout' />
         <FormContainerComp>
             <CheckoutStepsComp step1 step2 />
             <h2>Shipping</h2>
@@ -74,6 +77,7 @@ const ShippingScreen = ({ history }) => {
                 <Button type='submit' variant='primary'>Continue</Button>
             </Form>
         </FormContainerComp>
+        </>
     )
 }
 

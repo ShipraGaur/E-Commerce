@@ -5,6 +5,7 @@ import { Row, Col, Image, ListGroup, Card, Button, Form} from 'react-bootstrap'
 import LoaderComp from '../components/LoaderComp'
 import MessageComp from '../components/MessageComp'
 import RatingComp from '../components/RatingComp'
+import MetaComp from '../components/MetaComp'
 import { listProductDetails, createProductReview } from '../redux/actions/productActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../redux/ActionTypes/productConstants'
  
@@ -56,6 +57,7 @@ const ProductScreen = ({ history,match }) => {
                 <MessageComp variant='danger'>{error}</MessageComp>
             ) : (
                 <>
+                <MetaComp title={product.name} />
                 <Row>
                     <Col md={6}>
                         <Image src={product.image} alt={product.name} fluid/>

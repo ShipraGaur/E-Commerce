@@ -4,6 +4,7 @@ import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import MessageComp from '../components/MessageComp'
 import LoaderComp from '../components/LoaderComp'
+import MetaComp from '../components/MetaComp'
 import { listUsers, deleteUser } from '../redux/actions/userActions'
 
 const UserListScreen = ({ history }) => {
@@ -41,6 +42,8 @@ const UserListScreen = ({ history }) => {
         ) : error ? (
           <MessageComp variant='danger'>{error}</MessageComp>
         ) : (
+          <>
+          <MetaComp title='Users' />
           <Table striped bordered hover responsive className='table-sm'>
             <thead>
               <tr>
@@ -84,6 +87,7 @@ const UserListScreen = ({ history }) => {
               ))}
             </tbody>
           </Table>
+          </>
         )}
       </>
     )

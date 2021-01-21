@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import LoaderComp from '../components/LoaderComp'
 import MessageComp from '../components/MessageComp'
+import MetaComp from '../components/MetaComp'
 import{ getOrderDetails, payOrder, deliverOrder } from '../redux/actions/orderActions'
 import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
@@ -85,6 +86,7 @@ const OrderScreen = ({ match, history }) => {
         <MessageComp variant='danger'>{error}</MessageComp>
       ) : (
         <>
+          <MetaComp title='Order' />
           <h1>Order {order._id}</h1>
           <Row>
             <Col md={8}>

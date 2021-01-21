@@ -4,6 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Row, Col, Form, Button } from 'react-bootstrap'
 import MessageComp from '../components/MessageComp'
 import LoaderComp from '../components/LoaderComp'
+import MetaComp from '../components/MetaComp'
 import { getUserDetails , updateUserProfile } from '../redux/actions/userActions'
 import { listMyOrders } from '../redux/actions/orderActions'
 
@@ -55,6 +56,8 @@ const ProfileScreen = ({ history }) => {
     }
 
     return (
+        <>
+        <MetaComp title='Profile' />
         <Row>
             <Col md={3}>
                 <h2>User Profile</h2>
@@ -164,6 +167,7 @@ const ProfileScreen = ({ history }) => {
                 )}
             </Col>
         </Row>
+        </>
     )
 }
 

@@ -5,6 +5,7 @@ import { Row, Col, Form, Button } from 'react-bootstrap'
 import MessageComp from '../components/MessageComp'
 import LoaderComp from '../components/LoaderComp'
 import FormContainerComp from '../components/FormContainerComp'
+import MetaComp from '../components/MetaComp'
 import { register } from '../redux/actions/userActions'
 
 const RegisterScreen = ({ location, history}) => {
@@ -38,6 +39,8 @@ const RegisterScreen = ({ location, history}) => {
     }
 
     return (
+        <>
+        <MetaComp title='Register' />
         <FormContainerComp>
             <h1>Sign Up</h1>
             {message && <MessageComp variant='danger'>{message}</MessageComp>}
@@ -98,6 +101,7 @@ const RegisterScreen = ({ location, history}) => {
                     </Col>
                 </Row>
         </FormContainerComp>
+        </>
     )
 }
 

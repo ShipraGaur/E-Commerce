@@ -3,6 +3,7 @@ import { useDispatch, useSelector} from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import MessageComp from '../components/MessageComp'
+import MetaComp from '../components/MetaComp'
 import { addToCart , removeFromCart } from '../redux/actions/cartActions'
 
 const CartScreen = ({ match, location, history}) => {
@@ -29,6 +30,8 @@ const CartScreen = ({ match, location, history}) => {
     }
 
     return (
+        <>
+        <MetaComp title='Cart' />
         <Row>
             <Col md={8}>
                 <h1>Shopping Cart</h1>
@@ -88,6 +91,7 @@ const CartScreen = ({ match, location, history}) => {
                 </Card>
             </Col>
         </Row>
+        </>
     )
 }
 

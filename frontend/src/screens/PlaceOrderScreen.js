@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import CheckoutStepsComp from '../components/CheckoutStepsComp'
 import MessageComp from '../components/MessageComp'
+import MetaComp from '../components/MetaComp'
 import { createOrder } from '../redux/actions/orderActions'
 import { USER_DETAILS_RESET } from '../redux/ActionTypes/userConstants'
 import { ORDER_CREATE_RESET } from '../redux/ActionTypes/orderConstants'
@@ -61,6 +62,7 @@ const PlaceOrderScreen = ({ history }) => {
   
     return (
       <>
+        <MetaComp title='Checkout' />
         <CheckoutStepsComp step1 step2 step3 step4 />
         <Row>
           <Col md={8}>

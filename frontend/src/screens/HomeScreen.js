@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
+import { Link } from 'react-router-dom'
 import { Row , Col } from 'react-bootstrap'
 import ProductComp from '../components/ProductComp'
 import MessageComp from '../components/MessageComp'
 import LoaderComp from '../components/LoaderComp'
+import MetaComp from '../components/MetaComp'
 import { listProducts } from '../redux/actions/productActions'
 import ProductCarouselComp from '../components/ProductCarouselComp'
 
@@ -22,7 +24,14 @@ const HomeScreen = ({ match }) => {
 
     return (
         <React.Fragment>
-            {!keyword && <ProductCarouselComp />}
+            <MetaComp />
+            {!keyword ? (
+             <ProductCarouselComp />
+            ) : (
+                <Link to='/' className='btn btn-light'>
+                    Go Back
+                </Link>
+            )}
             <h1>Latest Products </h1>
             { loading ? (
                 <LoaderComp />

@@ -4,6 +4,7 @@ import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import MessageComp from '../components/MessageComp'
 import LoaderComp from '../components/LoaderComp'
+import MetaComp from '../components/MetaComp'
 import { listProducts, deleteProducts, createProduct } from '../redux/actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../redux/ActionTypes/productConstants'
 
@@ -56,6 +57,7 @@ const ProductListScreen = ({ history, match }) => {
     
     return (
         <>
+        <MetaComp title='Products' />
             <Row className='align-items-center'>
                 <Col>
                     <h1>Products</h1>

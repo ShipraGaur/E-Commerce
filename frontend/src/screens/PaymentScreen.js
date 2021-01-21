@@ -3,6 +3,7 @@ import { useDispatch, useSelector} from 'react-redux'
 import { Form, Button, Col } from 'react-bootstrap'
 import FormContainerComp from '../components/FormContainerComp'
 import CheckoutStepsComp from '../components/CheckoutStepsComp'
+import MetaComp from '../components/MetaComp'
 import { savePaymentMethod } from '../redux/actions/cartActions'
 
 const PaymentScreen = ({ history }) => {
@@ -24,6 +25,8 @@ const PaymentScreen = ({ history }) => {
     }
 
     return (
+        <>
+        <MetaComp title='Checkout' />
         <FormContainerComp>
             <CheckoutStepsComp step1 step2 step3 />
             <h2>Payment Method</h2>
@@ -46,6 +49,7 @@ const PaymentScreen = ({ history }) => {
                 <Button type='submit' variant='primary'>Continue</Button>
             </Form>
         </FormContainerComp>
+        </>
     )
 }
 
