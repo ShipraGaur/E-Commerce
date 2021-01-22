@@ -5,14 +5,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import MessageComp from '../components/MessageComp'
 import LoaderComp from '../components/LoaderComp'
 import MetaComp from '../components/MetaComp'
+import PaginateComp from '../components/PaginateComp'
 import { listProducts, deleteProducts, createProduct } from '../redux/actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../redux/ActionTypes/productConstants'
 
 const ProductListScreen = ({ history, match }) => {
+    const pageNumber = match.params.pageNumber
     const dispatch = useDispatch()
 
     const productList = useSelector((state) => state.productList)
-    const { loading, error, products } = productList
+    const { loading, error, products, pages, page } = productList
   
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
@@ -41,9 +43,9 @@ const ProductListScreen = ({ history, match }) => {
         if (successCreate) {
             history.push(`/admin/product/${createdProduct._id}/edit`)
         } else {
-            dispatch(listProducts())
+            dispatch(listProducts('', pageNumber))
         }
-    }, [dispatch, history, userInfo, successDelete, successCreate, createdProduct])
+    }, [dispatch, history, userInfo, successDelete, successCreate, createdProduct, pageNumber])
   
     const deleteHandler = (id) => {
       if (window.confirm('Are you sure')) {
@@ -115,7 +117,7 @@ const ProductListScreen = ({ history, match }) => {
                         ))}
                     </tbody>
                 </Table>
-                {/* <Paginate pages={pages} page={page} isAdmin={true} /> */}
+                <PaginateComp pages={pages} page={page} isAdmin={true} />
                 </>
             )}
         </>

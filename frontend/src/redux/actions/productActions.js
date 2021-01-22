@@ -2,11 +2,11 @@ import * as ActionTypes from '../ActionTypes/productConstants'
 import axios from 'axios'
 import { logout } from '../actions/userActions'
 
-export const listProducts = (keyword = '') => async(dispatch) => {
+export const listProducts = (keyword = '', pageNumber = '') => async(dispatch) => {
     try {
         dispatch({ type: ActionTypes.PRODUCT_LIST_REQUEST })
 
-        const {data} = await axios.get(`/api/products?keyword=${keyword}`)
+        const {data} = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`)
         dispatch({
             type: ActionTypes.PRODUCT_LIST_SUCCESS,
             payload: data
