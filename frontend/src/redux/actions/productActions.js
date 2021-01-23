@@ -43,6 +43,37 @@ export const listProductDetails = (id) => async(dispatch) => {
     }
 }
 
+export const updateProductStock = (productId, qty) => async(dispatch, getState) => {
+    try { 
+        dispatch({ type: ActionTypes.PRODUCT_UPDATE_STOCK_REQUEST })
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${ userInfo.token}`
+            }
+        }
+
+        const { data } = await axios.put(`/api/products/${productId}/updateStock`, qty, config)
+
+        dispatch({ type: ActionTypes.PRODUCT_UPDATE_STOCK_SUCCESS, payload: data })
+    } 
+    catch (error) {
+        const message = error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout())
+        }
+        dispatch({
+            type: ActionTypes.PRODUCT_UPDATE_STOCK_FAIL,
+            payload: message,
+        })
+    }
+}
+
 export const deleteProducts = (id) => async(dispatch, getState) => {
     try { 
         dispatch({ type: ActionTypes.PRODUCT_DELETE_REQUEST })

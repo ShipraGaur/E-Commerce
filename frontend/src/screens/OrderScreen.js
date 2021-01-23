@@ -9,6 +9,7 @@ import{ getOrderDetails, payOrder, deliverOrder } from '../redux/actions/orderAc
 import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../redux/ActionTypes/orderConstants'
+import { updateProductStock } from '../redux/actions/productActions'
 
 const OrderScreen = ({ match, history }) => {
     const orderId = match.params.id
@@ -22,6 +23,9 @@ const OrderScreen = ({ match, history }) => {
 
     const orderPay = useSelector((state) => state.orderPay)
     const { loading:loadingPay, success:successPay } = orderPay
+
+    const productUpdateStock = useSelector((state) => state.productUpdateStock)
+    const { loading:loadingUpdateStock } = productUpdateStock
 
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
@@ -55,6 +59,12 @@ const OrderScreen = ({ match, history }) => {
               setSdkReady(true)
             }
             document.body.appendChild(script)
+        }
+
+        if(successPay){
+          order.orderItems.map((item) => (
+            dispatch(updateProductStock(item.product, { qty: item.qty}))
+          ))
         }
 
         if(!order || successPay || order._id !== orderId || successDeliver){
@@ -194,6 +204,7 @@ const OrderScreen = ({ match, history }) => {
                   {!order.isPaid && !userInfo.isAdmin && (
                     <ListGroup.Item>
                       {loadingPay && <LoaderComp />}
+                      {loadingUpdateStock && <LoaderComp />}
                       {!sdkReady ? (
                         <LoaderComp />
                       ) : (

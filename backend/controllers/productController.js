@@ -95,6 +95,26 @@ export const updateProduct = asyncHandler(async (req,res) => {
     }
 }) 
 
+// @desc   Update CountInStock after payment
+// @route  PUT/api/products/:id
+// @access Private
+export const updateProductStock= asyncHandler(async (req,res) => {
+    const { qty } = req.body
+
+    const product = await Product.findById(req.params.id)
+
+    if (product) {
+        const count = product.countInStock - qty
+        product.countInStock = count > 0 ? count : 0 
+
+        const updatedProduct = await product.save()
+        res.json(updatedProduct)
+    } else {
+        res.status(404)
+        throw new Error('Product not found')
+    }
+}) 
+
 // @desc   Create a product review
 // @route  POST/api/products/:id/reviews
 // @access Private

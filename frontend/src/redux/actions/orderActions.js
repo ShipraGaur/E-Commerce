@@ -74,7 +74,7 @@ export const getOrderDetails = (id) => async(dispatch, getState) => {
         })
     }
 }
-
+ 
 export const payOrder = (orderId, paymentResult) => async(dispatch, getState) => {
     try { 
         dispatch({ type: ActionTypes.ORDER_PAY_REQUEST })

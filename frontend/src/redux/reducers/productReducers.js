@@ -31,6 +31,19 @@ export const productDetailsReducer = (state = { product: { reviews: [] }}, actio
     }
 }
 
+export const productUpdateStockReducer = (state = {}, action) => {
+    switch(action.type){
+        case ActionTypes.PRODUCT_UPDATE_STOCK_REQUEST:
+            return { loading: true }
+        case ActionTypes.PRODUCT_UPDATE_STOCK_SUCCESS:
+            return { loading: false, success:true }
+        case ActionTypes.PRODUCT_UPDATE_STOCK_FAIL:
+            return { loading:false, error: action.payload}
+        default:
+            return state
+    }
+}
+
 export const productDeleteReducer = (state = {}, action) => {
     switch(action.type){
         case ActionTypes.PRODUCT_DELETE_REQUEST:
